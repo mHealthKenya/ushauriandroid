@@ -31,6 +31,7 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
+                android:visibility="gone"
                 app:srcCompat="@drawable/couple" />
         </androidx.appcompat.widget.Toolbar>
 
@@ -61,7 +62,7 @@
                         android:id="@+id/mfl_code"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="MFL Code"
+                        android:hint="MFL Code*"
                         android:inputType="number"
                         android:maxLength="5"
                         android:textColorHint="#000"
@@ -77,7 +78,7 @@
                         android:id="@+id/ccc_no"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="CCC No"
+                        android:hint="CCC No*"
                         android:inputType="number"
                         android:maxLength="5"
                         android:textColorHint="#000"
@@ -259,7 +260,7 @@
                             android:id="@+id/clinical_review_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Clinical review date"
+                            android:hint="Clinical review date*"
                             android:focusable="false"
                             android:inputType="text"
                             android:maxLength="24"
@@ -297,7 +298,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:focusable="false"
-                        android:hint="Appointment date"
+                        android:hint="Appointment date*"
                         android:inputType="date"
                         android:maxLength="24"
                         android:textColorHint="#000"
@@ -307,7 +308,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Select appointment type" />
+                    android:text="Select appointment type*" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -351,7 +352,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:background="@color/colorPrimary"
+                    android:background="@drawable/background_round_corner_button"
                     android:fontFamily="serif"
                     android:text="Submit"
                     android:textColor="#FFFFFF" />

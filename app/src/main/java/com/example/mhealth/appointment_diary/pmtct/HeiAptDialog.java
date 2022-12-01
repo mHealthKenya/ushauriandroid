@@ -33,7 +33,9 @@ import com.example.mhealth.appointment_diary.config.VolleyErrors;
 import com.example.mhealth.appointment_diary.models.Hei;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
+import com.example.mhealth.appointment_diary.tables.UrlTable;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.orm.SugarRecord;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +61,8 @@ public class HeiAptDialog extends BottomSheetDialogFragment {
     private String clinicNumber;
     private String phone_no;
     private String PCR_TAKEN = "";
+
+    public  String z;
 
     RequestQueue queue;
 
@@ -264,6 +268,18 @@ public class HeiAptDialog extends BottomSheetDialogFragment {
     }
 
     private void bookHeiApt() {
+        try {
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                    //zz=_url.get(x).getStage_name1();
+                    // Toast.makeText(LoginActivity.this, "You are connected to" + " " +zz, Toast.LENGTH_LONG).show();
+                }
+            }
+        }catch (Exception e){
+            //e.printStackTrace();
+        }
 
         JSONObject payload = new JSONObject();
         try {
@@ -282,7 +298,7 @@ public class HeiAptDialog extends BottomSheetDialogFragment {
 
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Config.BOOK_HEI_APT, payload, new Response.Listener<JSONObject>() {
+                z+Config.BOOK_HEI_APT1, payload, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

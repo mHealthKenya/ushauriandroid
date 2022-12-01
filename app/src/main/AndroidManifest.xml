@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.mhealth.appointment_diary">
+    package="com.example.mhealth.appointment_diary" >
 
+    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
 
-    <application android:networkSecurityConfig="@xml/network_config_file"
+    <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,12 +21,35 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon">
-        <activity android:name=".privecy"></activity>
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon" >
+        <activity
+            android:name=".oijhg"
+            android:exported="false" />
+        <activity
+            android:name=".config.seli"
+            android:exported="false" />
+        <activity
+            android:name=".loginmodule.Avc"
+            android:exported="false" />
+        <activity
+            android:name=".config.SelectUpdateUrls"
+            android:exported="false" />
+        <activity
+            android:name=".config.Config"
+            android:exported="false" />
+        <activity
+            android:name=".config.TryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".config.URLActivity"
+            android:exported="false" />
+        <activity android:name=".appointment_diary.FetchAppointment" />
+        <activity android:name=".privecy" />
         <activity
             android:name=".PmtctActivity"
             android:label="PMTCT"
-            android:parentActivityName=".MainOptions">
+            android:parentActivityName=".MainOptions" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainOptions" />
@@ -34,7 +64,7 @@
             android:value="ushauridb.db" />
         <meta-data
             android:name="VERSION"
-            android:value="23" />
+            android:value="28" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />
@@ -43,7 +73,7 @@
             android:value="com.example.mhealth.appointment_diary" /> <!-- start sms retriever details here -->
         <service android:name=".Smsretrieverapi.BackgroundService" />
 
-        <activity android:name=".Smsretrieverapi.TestClass">
+        <activity android:name=".Smsretrieverapi.TestClass" >
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN"/> -->
@@ -56,20 +86,40 @@
         <receiver
             android:name=".Smsretrieverapi.SmsReceiver"
             android:enabled="true"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver> <!-- end sms retriever details here -->
-        <activity
+        <!--
+<activity
             android:name=".loginmodule.LoginActivity"
-            android:configChanges="orientation|screenSize">
+            android:configChanges="orientation|screenSize"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".config.SelectUrls"
+            android:configChanges="orientation|screenSize"/>
+        -->
+        <activity
+            android:name=".config.SelectUrls"
+            android:configChanges="orientation|screenSize"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".loginmodule.LoginActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name=".MainOptions"
             android:configChanges="orientation|screenSize" />
@@ -83,7 +133,7 @@
             android:name=".defaulters_diary.DefaulterMainActivity"
             android:configChanges="orientation|screenSize"
             android:label="Defaulter Diary"
-            android:parentActivityName=".MainOptions">
+            android:parentActivityName=".MainOptions" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainOptions" />
@@ -92,7 +142,7 @@
             android:name=".wellnesstab.WellnesTabs"
             android:configChanges="orientation|screenSize"
             android:label="Wellness Messages"
-            android:parentActivityName=".MainOptions">
+            android:parentActivityName=".MainOptions" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainOptions" />
@@ -102,7 +152,7 @@
             android:configChanges="orientation|screenSize"
             android:label="Appointment Diary"
             android:parentActivityName=".MainOptions"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainOptions" />
@@ -112,7 +162,7 @@
             android:configChanges="orientation|screenSize"
             android:label="Schedule Appointments"
             android:parentActivityName=".appointment_diary.TodaysAppointment"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".appointment_diary.TodaysAppointment" />
@@ -122,7 +172,7 @@
             android:configChanges="orientation|screenSize"
             android:label="Broadcast"
             android:parentActivityName=".appointment_diary.TodaysAppointment"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".appointment_diary.TodaysAppointment" />
@@ -132,7 +182,7 @@
             android:configChanges="orientation|screenSize"
             android:label="Client Transfer"
             android:parentActivityName=".appointment_diary.TodaysAppointment"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".appointment_diary.TodaysAppointment" />
@@ -142,7 +192,7 @@
             android:configChanges="orientation|screenSize"
             android:label="Client Consent"
             android:parentActivityName=".appointment_diary.TodaysAppointment"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".appointment_diary.TodaysAppointment" />
@@ -152,7 +202,7 @@
             android:configChanges="orientation|screenSize"
             android:label="Transit Client"
             android:parentActivityName=".appointment_diary.TodaysAppointment"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".appointment_diary.TodaysAppointment" />
@@ -162,7 +212,7 @@
             android:configChanges="orientation|screenSize"
             android:label="Clinic Movement"
             android:parentActivityName=".appointment_diary.TodaysAppointment"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".appointment_diary.TodaysAppointment" />
@@ -172,7 +222,7 @@
             android:configChanges="orientation|screenSize"
             android:label="Client Registration"
             android:parentActivityName=".appointment_diary.TodaysAppointment"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".appointment_diary.TodaysAppointment" />
@@ -182,7 +232,7 @@
             android:name=".DCMActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".appointment_diary.TodaysAppointment"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".appointment_diary.TodaysAppointment" />
@@ -191,7 +241,7 @@
             android:name=".RescheduleActivity"
             android:configChanges="orientation|screenSize"
             android:parentActivityName=".MainOptions"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainOptions" />
@@ -199,7 +249,7 @@
 
         <receiver
             android:name=".SmsBroadcastReceiver"
-            android:exported="true">
+            android:exported="true" >
 
             <!-- <intent-filter android:priority="999"> -->
             <!-- <action android:name="android.provider.Telephony.SMS_RECEIVED" /> -->

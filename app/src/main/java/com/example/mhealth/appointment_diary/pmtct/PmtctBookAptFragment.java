@@ -42,7 +42,9 @@ import com.example.mhealth.appointment_diary.config.VolleyErrors;
 import com.example.mhealth.appointment_diary.models.Hei;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
+import com.example.mhealth.appointment_diary.tables.UrlTable;
 import com.google.android.material.snackbar.Snackbar;
+import com.orm.SugarRecord;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -66,6 +68,7 @@ public class PmtctBookAptFragment extends Fragment {
     private Unbinder unbinder;
     private View root;
     private Context context;
+    public String  z;
 
     RequestQueue queue;
 
@@ -199,6 +202,20 @@ public class PmtctBookAptFragment extends Fragment {
     }
 
     private void getHeis() {
+    try {
+        List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+        if (_url.size()==1){
+            for (int x=0; x<_url.size(); x++){
+                z=_url.get(x).getBase_url1();
+                //zz=_url.get(x).getStage_name1();
+                // Toast.makeText(LoginActivity.this, "You are connected to" + " " +zz, Toast.LENGTH_LONG).show();
+            }
+        }
+    }catch(Exception e){
+        e.printStackTrace();
+    }
+       /* UrlTable _url = SugarRecord.findById(UrlTable.class, 1);
+        String  z=  _url.base_url1;*/
         JSONObject payload = new JSONObject();
         try {
             payload.put("clinic_number", mfl_code.getText().toString()+ccc_no.getText().toString());
@@ -211,7 +228,7 @@ public class PmtctBookAptFragment extends Fragment {
 
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Config.GET_ATTACHED_HEIS, payload, new Response.Listener<JSONObject>() {
+                z+Config.GET_ATTACHED_HEIS1, payload, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:src="@drawable/transfer" />
+                />
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -68,7 +68,7 @@
                         android:id="@+id/transferccc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="MFL Code"
+                        android:hint="MFL Code*"
                         android:inputType="number"
                         android:maxLength="5"
                         android:textColorHint="#000"
@@ -84,7 +84,7 @@
                         android:id="@+id/transferupn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="CCC No."
+                        android:hint="CCC No.*"
                         android:inputType="number"
                         android:maxLength="5"
                         android:textColorHint="#000"
@@ -103,7 +103,8 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:textColor="#FFFFFF"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/background_round_corner_button"
+                android:textAllCaps="true"
                 android:layout_marginTop="4dp"
                 />
 

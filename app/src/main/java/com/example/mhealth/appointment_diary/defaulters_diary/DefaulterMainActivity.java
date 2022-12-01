@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Parcelable;
 import android.os.SystemClock;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -171,7 +172,15 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
                         defaultB = false;
                         missedB = true;
                         lostB = false;
-                        missedFrag = (MissedFragment) adapter.getItem(index);
+                        Handler handler = new Handler();
+                        Runnable runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                missedFrag = (MissedFragment) adapter.getItem(index);
+                            }
+                        }; handler.post(runnable);
+
+                       // missedFrag = (MissedFragment) adapter.getItem(index);
 
 
 
@@ -186,7 +195,15 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
                         defaultB = true;
                         missedB = false;
                         lostB = false;
-                        defaultFrag = (DefaulterFragment) adapter.getItem(index);
+                        Handler handler1 = new Handler();
+                        Runnable runnable1 = new Runnable() {
+                            @Override
+                            public void run() {
+                                defaultFrag = (DefaulterFragment) adapter.getItem(index);
+                            }
+                        };handler1.post(runnable1);
+
+                        //defaultFrag = (DefaulterFragment) adapter.getItem(index);
 
 
 
@@ -204,7 +221,15 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
                         defaultB = false;
                         missedB = false;
                         lostB = true;
-                        lostFrag = (LosttoFollowFragment) adapter.getItem(index);
+
+                        Handler handler2 = new Handler();
+                        Runnable runnable2 = new Runnable() {
+                            @Override
+                            public void run() {
+                                lostFrag = (LosttoFollowFragment) adapter.getItem(index);
+                            }
+                        };handler2.post(runnable2);
+                        //lostFrag = (LosttoFollowFragment) adapter.getItem(index);
 
 
 
@@ -322,6 +347,7 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
 //                    Toast.makeText(getApplicationContext(), "searching", Toast.LENGTH_SHORT).show();
                     doSearching(s);
+
                 }
 
                 @Override
@@ -345,7 +371,7 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
         }
     }
 
-    private void doSearching(CharSequence s){
+    public void doSearching(CharSequence s){
 
         try{
 
@@ -354,15 +380,15 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
             if(defaultB){
 //                Toast.makeText(this, "searching defaulters", Toast.LENGTH_SHORT).show();
                 defaultFrag.Dosearch(s);
+                //myadapt.getFilter().filter(s.toString());
             }
             else if(missedB){
                 missedFrag.Dosearch(s);
-//                Toast.makeText(this, "searching missed", Toast.LENGTH_SHORT).show();
+                //                Toast.makeText(this, "searching missed", Toast.LENGTH_SHORT).show();
 
 
             }
             else if(lostB){
-
                 lostFrag.doSearching(s);
 //                Toast.makeText(this, "searching lost", Toast.LENGTH_SHORT).show();
 
@@ -384,7 +410,14 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
                 if (chkInternet.isInternetAvailable()) {
 
                     Toast.makeText(DefaulterMainActivity.this, "going online", Toast.LENGTH_SHORT).show();
-                    loadMessagesOnline();
+                    Handler handler = new Handler();
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            loadMessagesOnline();
+                        }
+                    }; handler.post(runnable);
+                   // loadMessagesOnline();
 
 //        triggerAppointmentMessages();
 
@@ -423,7 +456,15 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
 
         if (chkInternet.isInternetAvailable()) {
 
-            acs.getDefaultersAppointmentMessages(getUserPhoneNumber());
+            Handler handler = new Handler();
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    acs.getDefaultersAppointmentMessages(getUserPhoneNumber());
+                }
+            }; handler.post(runnable);
+
+           // acs.getDefaultersAppointmentMessages(getUserPhoneNumber());
 
         } else {
 
@@ -457,7 +498,7 @@ public class DefaulterMainActivity extends AppCompatActivity implements SmsRecei
 
 
         Intent alarm = new Intent(DefaulterMainActivity.this, SmsReceiver.class);
-        boolean alarmRunning = (PendingIntent.getBroadcast(DefaulterMainActivity.this, 0, alarm, PendingIntent.FLAG_NO_CREATE) != null);
+        boolean alarmRunning = (PendingIntent.getBroadcast(DefaulterMainActivity.this, 0, alarm, PendingIntent.FLAG_IMMUTABLE) != null);
         if (!alarmRunning) {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(DefaulterMainActivity.this, 0, alarm, 0);
             AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);

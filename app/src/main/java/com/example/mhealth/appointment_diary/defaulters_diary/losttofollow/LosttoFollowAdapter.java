@@ -47,8 +47,6 @@ import java.util.List;
 
 public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
-
-
     private Context mycont;
     private List<LosttoFollowModel> mylist5;
     LosttoFollowAdapter.CustomFilter filter;
@@ -61,7 +59,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
     String encrypted;
 
-//    Spinner myspinner;
+    //    Spinner myspinner;
     EditText myother;
     String first_outcome_code = " ";
 
@@ -571,17 +569,17 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
 //                    final String[] outcome={"Select outcome","Client contacted","Client not contacted"};
 //                    String[] finaloutcome={"Select final outcome","client declined care","rescheduling","Client Returned To Care","Self Transfer","Dead","Challenging Client","Client Too Sick To Attend Appointment","Other"};
-                    String[] newapptype={"Select new appointment type","Refill","Clinical review","Enhanced Adherance Counselling","Lab investigation","VL Booking","Other"};
+                    String[] newapptype={"Select new appointment type*","Refill","Clinical review","Enhanced Adherance Counselling","Lab investigation","VL Booking","Other"};
 
-                    final String[] outcome={"Select outcome","Client contacted after lost to follow up","Client not contacted after lost to follow up","Informant contacted after lost to follow up", "Informant not contacted after lost to follow up"};
+                    final String[] outcome={"Select outcome*","Client contacted","Client not contacted","Informant contacted", "Informant not contacted"};
 
-                    String[] finaloutcome={"Select final outcome","client declined care after lost to follow up","Client Returned To Care after lost to follow up","Self Transfer after lost to follow up","Dead after lost to follow up","Other"};
+                    String[] finaloutcome={"Select final outcome*","client declined care","Client Returned To Care","Self Transfer","Dead","Other"};
 
 
-                    String[] finalclientoutcome={"Select final outcome","client declined care after lost to follow up","Client Returned To Care after lost to follow up","Self Transfer after lost to follow up","Other"};
+                    String[] finalclientoutcome={"Select final outcome*","client declined care","Client Returned To Care","Self Transfer","Other"};
 
 //
-                    String[] finalinformantoutcome={"Select final outcome","client declined care after lost to follow up","Client Returned To Care after lost to follow up","Self Transfer after lost to follow up","Dead after lost to follow up","Other"};
+                    String[] finalinformantoutcome={"Select final outcome*","client declined care","Client Returned To Care","Self Transfer","Dead","Other"};
 
 
                     final ArrayAdapter<String> adapter = new ArrayAdapter<String>(v.getContext() , android.R.layout.simple_spinner_dropdown_item,outcome);
@@ -597,7 +595,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
                     newapptypespinner.setAdapter(adapter3);
 
 
-                    String[] onDsdString={"Is the client on DSD or not?","On DSD","NOT on DSD"};
+                    String[] onDsdString={"Is the client on DSD or not*?","On DSD","NOT on DSD"};
 
 
                     final ArrayAdapter<String> dsdAdapter = new ArrayAdapter<String>(v.getContext() , android.R.layout.simple_spinner_dropdown_item,onDsdString);
@@ -696,7 +694,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 //                            itemselected = parent.getItemAtPosition(position).toString();
                             first_outcome_code =Integer.toString(position) ;
 
-                            if(myspinner.getSelectedItem().equals("Client contacted after lost to follow up")){
+                            if(myspinner.getSelectedItem().equals("Client contacted")){
 
                                 finalspinner.setAdapter(adapterclient);
                                 finalspinner.setVisibility(View.VISIBLE);
@@ -708,7 +706,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
                                 rescheduladateE.setVisibility(View.GONE);
                                 rescheduladateE.setText("");
                             }
-                            else if(myspinner.getSelectedItem().equals("Informant contacted after lost to follow up")){
+                            else if(myspinner.getSelectedItem().equals("Informant contacted")){
 
                                 finalspinner.setAdapter(adapterinformant);
                                 finalspinner.setVisibility(View.VISIBLE);
@@ -732,7 +730,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
                                 rescheduladateE.setText("");
                             }
 
-                            else if(myspinner.getSelectedItem().equals("rescheduling after lost to follow up")){
+                            else if(myspinner.getSelectedItem().equals("rescheduling")){
 
                                 rescheduledate1E.setVisibility(View.VISIBLE);
                                 rescheduledate1E.setOnClickListener(new View.OnClickListener() {
@@ -777,7 +775,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 //                            itemselected = parent.getItemAtPosition(position).toString();
                             second_outcome_code =Integer.toString(position) ;
 
-                            if(finalspinner.getSelectedItem().equals("Client Returned To Care after lost to follow up")){
+                            if(finalspinner.getSelectedItem().equals("Client Returned To Care")){
 
                                 newapptypespinner.setVisibility(View.VISIBLE);
                                 myapp.setVisibility(View.VISIBLE);
@@ -788,7 +786,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
                                 rescheduladateE.setText("");
 
                                 clientreturndateE.setVisibility(View.VISIBLE);
-                                clientreturndateE.setHint("Date client returned to care after lost to follow up");
+                                clientreturndateE.setHint("Date client returned to care");
                                 clientreturndateE.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -800,7 +798,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
                             }
 
-                            else if(finalspinner.getSelectedItem().equals("rescheduling after lost to follow up")){
+                            else if(finalspinner.getSelectedItem().equals("rescheduling")){
 
                                 rescheduladateE.setVisibility(View.VISIBLE);
                                 rescheduladateE.setOnClickListener(new View.OnClickListener() {
@@ -821,7 +819,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
                             }
 
-                            else if(finalspinner.getSelectedItem().equals("Self Transfer after lost to follow up")){
+                            else if(finalspinner.getSelectedItem().equals("Self Transfer")){
 
                                 mydate.setVisibility(View.GONE);
                                 specifyother.setVisibility(View.GONE);
@@ -841,7 +839,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
                                 myapp.setVisibility(View.GONE);
 
                             }
-                            else if(finalspinner.getSelectedItem().equals("Dead after lost to follow up")){
+                            else if(finalspinner.getSelectedItem().equals("Dead")){
 
                                 mydate.setVisibility(View.GONE);
                                 specifyother.setVisibility(View.GONE);
@@ -862,7 +860,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
                                 myapp.setVisibility(View.GONE);
 
                             }
-                            else if(finalspinner.getSelectedItem().equals("Challenging Client after lost to follow up")){
+                            else if(finalspinner.getSelectedItem().equals("Challenging Client")){
 
                                 mydate.setVisibility(View.GONE);
                                 specifyother.setVisibility(View.GONE);
@@ -876,7 +874,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
 
                             }
-                            else if(finalspinner.getSelectedItem().equals("Client Too Sick To Attend Appointment after lost to follow up")){
+                            else if(finalspinner.getSelectedItem().equals("Client Too Sick To Attend Appointment")){
 
                                 mydate.setVisibility(View.GONE);
                                 specifyother.setVisibility(View.GONE);
@@ -1070,7 +1068,7 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
                                     if(finalspinner.isShown()){
 
-                                        if(finalspinner.getSelectedItem().equals("Client Returned To Care after lost to follow up")||finalspinner.getSelectedItem().equals("Self Transfer after lost to follow up")||finalspinner.getSelectedItem().equals("Dead after lost to follow up")){
+                                        if(finalspinner.getSelectedItem().equals("Client Returned To Care")||finalspinner.getSelectedItem().equals("Self Transfer")||finalspinner.getSelectedItem().equals("Dead")){
 
                                             Appointments missedVisitSugar = (Appointments) myl.get(x);
                                             missedVisitSugar.getId();
@@ -1608,4 +1606,5 @@ public class LosttoFollowAdapter extends BaseAdapter implements Filterable {
 
         }
     }
+
 }

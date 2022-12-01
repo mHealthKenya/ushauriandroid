@@ -32,6 +32,8 @@ import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.config.VolleyErrors;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
+import com.example.mhealth.appointment_diary.tables.UrlTable;
+import com.orm.SugarRecord;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,13 +55,15 @@ public class PmtctUnscheduledHeiAptFragment extends Fragment {
     private View root;
     private Context context;
 
+    public String z;
+
 
     RequestQueue queue;
 
     private String phone_no;
 
 
-    String[] appnment = {"Please select appointment type","Re-Fill","Clinical review","Enhanced Adherence counseling","Lab investigation","VL Booking","Other"};
+    String[] appnment = {"Please select appointment type*","Re-Fill","Clinical review","Enhanced Adherence counseling","Lab investigation","VL Booking","Other"};
 
 
 
@@ -248,6 +252,21 @@ public class PmtctUnscheduledHeiAptFragment extends Fragment {
 
 
     private void bookNormalTca() {
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                    //zz=_url.get(x).getStage_name1();
+                    // Toast.makeText(LoginActivity.this, "You are connected to" + " " +zz, Toast.LENGTH_LONG).show();
+                }
+            }
+        }catch (Exception e)
+        {
+
+        }
+        /*UrlTable _url = SugarRecord.findById(UrlTable.class, 1);
+        String  z=  _url.base_url1;*/
         JSONObject payload = new JSONObject();
         try {
             payload.put("hei_number", hei_no.getText().toString());
@@ -263,7 +282,7 @@ public class PmtctUnscheduledHeiAptFragment extends Fragment {
 
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Config.BOOK_UNSCHEDULED_HEI_ONLY_APT, payload, new Response.Listener<JSONObject>() {
+                z+Config.BOOK_UNSCHEDULED_HEI_ONLY_APT1, payload, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {

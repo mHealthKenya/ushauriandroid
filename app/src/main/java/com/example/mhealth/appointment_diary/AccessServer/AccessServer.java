@@ -5,6 +5,7 @@ package com.example.mhealth.appointment_diary.AccessServer;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ import com.example.mhealth.appointment_diary.Progress.Progress;
 import com.example.mhealth.appointment_diary.config.Config;
 import com.example.mhealth.appointment_diary.models.Appointments;
 import com.example.mhealth.appointment_diary.tables.Mflcode;
+import com.example.mhealth.appointment_diary.tables.UrlTable;
+import com.orm.SugarRecord;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +40,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -47,7 +51,7 @@ import static com.android.volley.Request.Method.POST;
 
 public class AccessServer {
 
-
+    public String z;
 
     Context ctx;
 
@@ -55,10 +59,7 @@ public class AccessServer {
     Progress pr;
     ProcessMessage pm;
     Dialogs dialogs;
-
     SweetAlertDialog mdialog;
-
-
     Dialog mydialog;
     private JSONArray id_result;
 
@@ -94,10 +95,23 @@ public class AccessServer {
 
     public void sendDetailsToDb(final String message) throws MalformedURLException, URISyntaxException {
 
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                    //zz=_url.get(x).getStage_name1();
+                    // Toast.makeText(LoginActivity.this, "You are connected to" + " " +zz, Toast.LENGTH_LONG).show();
+                }
+            }
+        }catch(Exception e){
+
+        }
+
         pr.showProgress("Sending message...");
 
         //start url encoding the url to remove special characters
-        String urlStr = Config.SENDDATATODB_URL+message;
+        String urlStr = z+Config.SENDDATATODB_URL1+message;
         URL url= new URL(urlStr);
         URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
         urlStr=uri.toASCIIString();
@@ -144,11 +158,21 @@ public class AccessServer {
 
 
     public void sendDetailsToDbPost(final String msg, final String phone) {
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
 
+        } catch(Exception e){
+
+        }
         pr.showProgress("Sending message.....");
         final int[] mStatusCode = new int[1];
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.SENDDATATODB_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, z+Config.SENDDATATODB_URL1,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -165,11 +189,6 @@ public class AccessServer {
 
                             dialogs.showErrorDialog(response,"Server response");
                         }
-
-
-
-
-
 
                     }
                 },
@@ -242,11 +261,20 @@ public class AccessServer {
 
 
     public void sendConfirmToDbPost(final String msg, final String phone, final String ON_DSD, final String second_outcome_code ) {
-
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
+        }catch(Exception e){
+            //e.printStackTrace();
+        }
         pr.showProgress("Sending message.....");
         final int[] mStatusCode = new int[1];
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.SENDDATATODB_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, z+Config.SENDDATATODB_URL1,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -361,6 +389,17 @@ public class AccessServer {
 
 
     public void getTodaysAppointmentMessages(final String phone){
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
+        } catch(Exception e){
+            //e.printStackTrace();
+        }
+
 
         Toast.makeText(ctx, ""+phone, Toast.LENGTH_SHORT).show();
 
@@ -370,7 +409,7 @@ public class AccessServer {
             final int[] mStatusCode = new int[1];
 
 
-            StringRequest stringRequest = new StringRequest(POST,Config.GETTODAYSAPPOINTMENT_URL,
+            StringRequest stringRequest = new StringRequest(POST,  z+Config.GETTODAYSAPPOINTMENT_URL1,
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -528,7 +567,16 @@ public class AccessServer {
     //start get defaulter messages
 
     public void getDefaultersAppointmentMessages(final String phone){
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                                   }
+            }
+        }catch(Exception e){
 
+        }
 
         try{
 
@@ -536,7 +584,8 @@ public class AccessServer {
             final int[] mStatusCode = new int[1];
 
 
-            StringRequest stringRequest = new StringRequest(POST,Config.GETDEFAULTERSAPPOINTMENT_URL,
+            StringRequest stringRequest = new StringRequest(POST,  z+Config.GETDEFAULTERSAPPOINTMENT_URL1,
+
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -702,7 +751,17 @@ public class AccessServer {
 
     public void getUserMflCode(final String phone, final EditText phoneE){
 
-//        Toast.makeText(ctx, ""+phone, Toast.LENGTH_SHORT).show();
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
+        }catch(Exception e){
+
+        }
+
         final int[] mStatusCode = new int[1];
 
         try{
@@ -710,7 +769,8 @@ public class AccessServer {
             pr.showProgress("getting user mflcode...");
 
 
-            StringRequest stringRequest = new StringRequest(POST,Config.GETUSERMFLCODE_URL,
+           // StringRequest stringRequest = new StringRequest(POST,Config.GETUSERMFLCODE_URL,
+                    StringRequest stringRequest = new StringRequest(POST, z+Config.GETUSERMFLCODE_URL1,
                     new Response.Listener<String>() {
 
 
@@ -745,7 +805,7 @@ public class AccessServer {
                             else{
                                 System.out.println("***error 1****"+response);
 
-                                dialogs.showErrorDialog(response,"Server response");
+                                dialogs.showErrorDialog(response,"Server responses");
                             }
 
 
@@ -760,8 +820,9 @@ public class AccessServer {
                                 byte[] htmlBodyBytes = error.networkResponse.data;
 
 //                            Toast.makeText(ctx,  ""+error.networkResponse.statusCode+" error mess "+new String(htmlBodyBytes), Toast.LENGTH_SHORT).show();
-                                dialogs.showErrorDialog(new String(htmlBodyBytes),"Server Response");
+                                dialogs.showErrorDialog(new String(htmlBodyBytes),"Server Responsess");
                                 System.out.println("***error 3****"+error.getMessage());
+                                //Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
 
                                 pr.dissmissProgress();
 
@@ -888,11 +949,24 @@ public class AccessServer {
 
     public void removeFakeDefaulter(final String msg, final String phone) {
 
+        try{
+
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
+
+        }catch(Exception e){
+
+        }
+
         pr.showProgress("Sending message.....");
         final int[] mStatusCode = new int[1];
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, Config.SENDDATATODB_URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, z+Config.SENDDATATODB_URL1,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -993,6 +1067,125 @@ public class AccessServer {
     }
 
 //end function to remove fake defaulters
+
+    //request UPI
+    public void requestUPI(final String msg, final String mfl) {
+        try{
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
+
+        } catch(Exception e){
+
+        }
+        pr.showProgress("Requesting UPI...");
+        final int[] mStatusCode = new int[1];
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, z+Config.UPI_REQUEST,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        Toast.makeText(ctx, "message "+response, Toast.LENGTH_SHORT).show();
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            for (int a=0; a<jsonObject.length(); a++){
+                                String jsonObject1 =jsonObject.getString("clientNumber");
+                                Toast.makeText(ctx, "UPI is"+jsonObject1, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        pr.dissmissProgress();
+
+
+                        if(mStatusCode[0]==200){
+
+
+
+                            dialogs.showSuccessDialog(response,"Server Response");
+
+
+                        }
+                        else{
+
+                            dialogs.showErrorDialog(response,"Server response");
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        pr.dissmissProgress();
+
+                        try{
+
+                            //byte[] htmlBodyBytes = error.networkResponse.data;
+
+//                            Toast.makeText(ctx,  ""+error.networkResponse.statusCode+" error mess "+new String(htmlBodyBytes), Toast.LENGTH_SHORT).show();
+                           // dialogs.showErrorDialog(new String(htmlBodyBytes),"Server Response");
+                            Log.d("", error.getMessage());
+                            Toast.makeText(ctx, error.getMessage(), Toast.LENGTH_LONG).show();
+
+                            pr.dissmissProgress();
+
+                        }
+                        catch(Exception e){
+
+
+
+//                            Toast.makeText(ctx,  ""+error.networkResponse.statusCode+" error mess "+new String(htmlBodyBytes), Toast.LENGTH_SHORT).show();
+                            dialogs.showErrorDialog("error occured, try again","Server Response");
+
+                            pr.dissmissProgress();
+
+
+                        }
+
+
+                    }
+                }) {
+
+
+            @Override
+            protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                mStatusCode[0] = response.statusCode;
+                return super.parseNetworkResponse(response);
+            }
+
+            @Override
+            protected VolleyError parseNetworkError(VolleyError volleyError) {
+                return super.parseNetworkError(volleyError);
+            }
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("reg_payload",msg);
+                params.put("user_mfl", mfl);
+
+
+                return params;
+            }
+
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                800000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(ctx);
+        requestQueue.add(stringRequest);
+
+//        RequestQueue requestQueue = Volley.newRequestQueue(ctx);
+//        requestQueue.add(stringRequest);
+
+    }
 
 }
 

@@ -32,8 +32,10 @@ import com.example.mhealth.appointment_diary.config.VolleyErrors;
 import com.example.mhealth.appointment_diary.defaulters_diary.DefaulterMainActivity;
 import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
+import com.example.mhealth.appointment_diary.tables.UrlTable;
 import com.example.mhealth.appointment_diary.utilitymodules.Appointment;
 import com.example.mhealth.appointment_diary.utilitymodules.SpinnerAdapter;
+import com.orm.SugarRecord;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +52,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class DCMActivity extends AppCompatActivity {
 
+    public String z;
+
     private Spinner wellness_level_spinner,stability_level_spinner,on_dcm_spinner,new_continuing_dcm,facility_community_spinner,facility_based_model_spinner,
             community_based_model_spinner,appointment_type_spinner;
     private EditText mfl_code,ccc_no,stable_appointment_date,clinical_review_date,appointment_date,other_et;
@@ -58,6 +62,8 @@ public class DCMActivity extends AppCompatActivity {
     private Button btn_check,btn_submit_apt,btn_dcm_submit_apt;
 
     SweetAlertDialog mdialog;
+
+   // public String z;
 
 
 
@@ -84,7 +90,7 @@ public class DCMActivity extends AppCompatActivity {
 
 
     String[] appnment = {"Please select appointment type","Re-Fill","Clinical review","Enhanced Adherence counseling","Lab investigation","VL Booking","Other"};
-    String[] wellness = {"Please select wellness level","Well","Advanced"};
+    String[] wellness = {"Please select wellness level*","Well","Advanced"};
     String[] stability = {"Please select stability level","Stable","Unstable"};
     String[] on_dcm = {"Please select if on DSD","On DSD","NOT on DSD"};
     String[] new_continuing_dcm_choice = {"Please select if new or continuing on DSD","New On DSD","Continuing on DSD"};
@@ -105,7 +111,7 @@ public class DCMActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("DSD Clients");
+        getSupportActionBar().setTitle("DSD clients");
 
         List<Activelogin> myl=Activelogin.findWithQuery(Activelogin.class,"select * from Activelogin");
 
@@ -330,8 +336,22 @@ public class DCMActivity extends AppCompatActivity {
         });
 
         btn_dcm_submit_apt.setOnClickListener(new View.OnClickListener() {
+              /*  UrlTable _url = SugarRecord.findById(UrlTable.class, 1);
+              String   a=  _url.base_url1;*/
+
             @Override
             public void onClick(View v) {
+
+                try {
+                    List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+                    if (_url.size()==1){
+                        for (int x=0; x<_url.size(); x++){
+                            z=_url.get(x).getBase_url1();
+                        }
+                    }
+                }catch (Exception e){
+
+                }
                 Log.e("months:", String.valueOf(months));
                 if (months >= 12) {
                     Log.e("Stability level: ", STABILITY_LEVEL);
@@ -345,15 +365,15 @@ public class DCMActivity extends AppCompatActivity {
 
                         }else if (ON_DCM_STATUS.equals("NOT on DSD")){
                             if (validateNotOnDcm())
-                                bookNormalTca(Config.NOT_ON_DCM_BOOKING);
+                                bookNormalTca(z+Config.NOT_ON_DCM_BOOKING1);
                         }
                     }else if (STABILITY_LEVEL.equals("Unstable")){
                         if (validateUnstable())
-                            bookNormalTca(Config.UNSTABLE_BOOKING);
+                            bookNormalTca(z+Config.UNSTABLE_BOOKING1);
                     }
                 }else {
                     if (validateWellAdvanced())
-                        bookNormalTca(Config.WELL_ADVANCED_BOOKING);
+                        bookNormalTca(z+Config.WELL_ADVANCED_BOOKING1);
                 }
             }
         });
@@ -362,6 +382,7 @@ public class DCMActivity extends AppCompatActivity {
         btn_submit_apt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Log.e("months:", String.valueOf(months));
                 if (months >= 12) {
                     Log.e("Stability level: ", STABILITY_LEVEL);
@@ -374,17 +395,40 @@ public class DCMActivity extends AppCompatActivity {
                                 bookOnDcm();
 
                         }else if (ON_DCM_STATUS.equals("NOT on DSD")){
+                            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+                            if (_url.size()==1){
+                                for (int x=0; x<_url.size(); x++){
+                                    z=_url.get(x).getBase_url1();
+                                }
+                            }
                             if (validateNotOnDcm())
-                                bookNormalTca(Config.NOT_ON_DCM_BOOKING);
+                                bookNormalTca(z+Config.NOT_ON_DCM_BOOKING1);
 
                         }
                     }else if (STABILITY_LEVEL.equals("Unstable")){
+                        List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+                        if (_url.size()==1){
+                            for (int x=0; x<_url.size(); x++){
+                                z=_url.get(x).getBase_url1();
+                                                            }
+                        }
                         if (validateUnstable())
-                            bookNormalTca(Config.UNSTABLE_BOOKING);
+                            bookNormalTca(z+Config.UNSTABLE_BOOKING1);
                     }
                 }else {
+                    try {
+                        List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+                        if (_url.size()==1){
+                            for (int x=0; x<_url.size(); x++){
+                                z=_url.get(x).getBase_url1();
+
+                            }
+                        }
+                    }catch (Exception e){
+
+                    }
                     if (validateWellAdvanced())
-                        bookNormalTca(Config.NOT_ON_DCM_BOOKING);
+                        bookNormalTca(z+Config.NOT_ON_DCM_BOOKING1);
                 }
             }
         });
@@ -756,7 +800,18 @@ public class DCMActivity extends AppCompatActivity {
     }
 
     private void bookOnDcm() {
+        try {
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+                }
+            }
 
+        }catch ( Exception e){
+
+
+        }
         JSONObject payload = new JSONObject();
         try {
             payload.put("clinic_number", mfl_code.getText().toString()+ccc_no.getText().toString());
@@ -773,7 +828,7 @@ public class DCMActivity extends AppCompatActivity {
 
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Config.ON_DCM_BOOKING, payload, new Response.Listener<JSONObject>() {
+                z+Config.ON_DCM_BOOKING1, payload, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -912,6 +967,17 @@ public class DCMActivity extends AppCompatActivity {
     }
 
     private void getDuration() {
+        try {
+            List<UrlTable> _url =UrlTable.findWithQuery(UrlTable.class, "SELECT *from URL_TABLE ORDER BY id DESC LIMIT 1");
+            if (_url.size()==1){
+                for (int x=0; x<_url.size(); x++){
+                    z=_url.get(x).getBase_url1();
+
+                }
+            }
+        }catch (Exception e){
+
+        }
         JSONObject payload = new JSONObject();
         try {
             payload.put("clinic_number", mfl_code.getText().toString()+ccc_no.getText().toString());
@@ -924,7 +990,7 @@ public class DCMActivity extends AppCompatActivity {
 
 
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                Config.GET_ENROLLMENT_DURATION, payload, new Response.Listener<JSONObject>() {
+                z+Config.GET_ENROLLMENT_DURATION1, payload, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -1163,5 +1229,13 @@ public class DCMActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void callURL(){
+        try{
+            UrlTable _url = SugarRecord.findById(UrlTable.class, 1);
+            z=  _url.base_url1;
+        }catch (Exception e){
+
+        }
     }
 }

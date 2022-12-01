@@ -1,8 +1,12 @@
 package com.example.mhealth.appointment_diary.defaulters_diary.missed.call;
 
+//import android.app.Fragment;
+//import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
 import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -172,6 +176,8 @@ public class MissedCallFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.missedcallfragment, container, false);
 
+        // your other stuff
+
 
 //        String getName="";
 //        Intent intent = getActivity().getIntent();
@@ -214,9 +220,14 @@ public class MissedCallFragment extends Fragment {
         }
 
 
-
-
-        populateListView();
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                populateListView();
+            }
+        }; handler.post(runnable);
+        //populateListView();
 
 
         return view;
@@ -227,7 +238,8 @@ public class MissedCallFragment extends Fragment {
         //refreshSmsInbox();
         try {
             myadapt.getFilter().filter(s.toString());
-//            Toast.makeText(getActivity(), "searching defaulter call "+s.toString(), Toast.LENGTH_SHORT).show();
+
+           //Toast.makeText(getActivity(), "searching defaulter call "+s.toString(), Toast.LENGTH_SHORT).show();
         }
         catch(Exception e){
 

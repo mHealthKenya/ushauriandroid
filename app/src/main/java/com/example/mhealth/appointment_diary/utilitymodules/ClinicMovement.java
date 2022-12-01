@@ -22,10 +22,12 @@ import com.example.mhealth.appointment_diary.tables.Activelogin;
 import com.example.mhealth.appointment_diary.tables.Registrationtable;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ClinicMovement extends AppCompatActivity implements AdapterView.OnItemSelectedListener  {
 
-    String[] Apptype={"Select Clinic","PSC","PMTCT", "Adolescent Clinic","TB-HIV"};
+    String[] Apptype={"","PSC","PMTCT", "Adolescent Clinic","TB-HIV"};
+    //Select Clinic*
     Spinner clinicSpinner;
     String selectedClinic;
     EditText transmflE,transupnE;
@@ -215,7 +217,7 @@ public class ClinicMovement extends AppCompatActivity implements AdapterView.OnI
 
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            Objects.requireNonNull(getSupportActionBar()).setTitle("Clinic movement");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         catch(Exception e){

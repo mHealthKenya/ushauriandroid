@@ -28,7 +28,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select if client on DSD" />
+        android:textStyle="bold"
+        android:text="Select if client on DSD*" />
 
     <Spinner
         android:id="@+id/on_dsd_spinner"
@@ -39,8 +40,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
-        android:text="Select Outcome" />
+        android:textStyle="bold"
+        android:text="Select Outcome*" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -151,7 +152,7 @@
         android:layout_height="wrap_content"
         android:inputType="text"
 
-        android:hint="Tracers name"/>
+        android:hint="Tracers name*"/>
 
     <EditText
         android:id="@+id/defvismissedvisitTracingcost"
@@ -160,7 +161,7 @@
         android:inputType="text"
 
 
-        android:hint="Tracing cost"/>
+        android:hint="Tracing cost*"/>
 
 <LinearLayout
     android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,8 +55,10 @@ public class Appointment extends AppCompatActivity implements AdapterView.OnItem
     AccessServer acs;
     SendMessage sm;
 
-    String[] appnment = {"Please select appointment type","Re-Fill","Clinical review","Enhanced Adherence counseling","Lab investigation","VL Booking","Other"};
-    String[] previous = {"Was previous appointment kept","Yes","No","Not Applicable"};
+    String[] appnment = {"","Re-Fill","Clinical review","Enhanced Adherence counseling","Lab investigation","VL Booking","Other"};
+    //Please select appointment type
+    String[] previous = {"","Yes","No","Not Applicable"};
+   // Was previous appointment kept
 
 
     EditText cccE,upnE,adateE,aotherE;
@@ -76,7 +79,7 @@ public class Appointment extends AppCompatActivity implements AdapterView.OnItem
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Book Appointment");
+        getSupportActionBar().setTitle("Book appointment");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -89,10 +92,21 @@ public class Appointment extends AppCompatActivity implements AdapterView.OnItem
         final Button btnRSubmit = (Button) findViewById(R.id.btnRSubmit);
         btnRSubmit.setEnabled(true);
 
-        populateAppointment();
-        populatePrevious();
 
-        setSpinnerListeners();
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                populateAppointment();
+                populatePrevious();
+
+                setSpinnerListeners();
+            }
+        };handler.post(runnable);
+
+       /* populateAppointment();
+        populatePrevious();
+        setSpinnerListeners();*/
 
 
 
@@ -166,8 +180,19 @@ public class Appointment extends AppCompatActivity implements AdapterView.OnItem
             upnE.setText("");
             aotherE.setText("");
 
-            populateAppointment();
-            populatePrevious();
+
+            Handler handler = new Handler();
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    populateAppointment();
+                    populatePrevious();
+                }
+            };handler.post(runnable);
+
+           /* populateAppointment();
+            populatePrevious();*/
         }
         catch(Exception e){
 

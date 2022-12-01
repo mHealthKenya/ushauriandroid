@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         android:paddingLeft="24dp"
         android:paddingRight="24dp"
@@ -16,11 +16,11 @@
         android:weightSum="1">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="72dp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="24dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/nascoplogonew" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -33,27 +33,28 @@
                 android:id="@+id/usr_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter Phone number"
+                android:hint="Enter phone number*"
                 android:maxLength="10"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="Select Affiliation" />
-
+            android:text="Select affiliation"
+            />
 
 
         <androidx.appcompat.widget.AppCompatEditText
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:focusable="false"
             android:id="@+id/affiliationnewspinner"
-            android:hint="Select Affiliation"
+            android:hint="Select Affiliation*"
             app:drawableRightCompat="@drawable/down_arrow"
             android:layout_height="wrap_content" />
 
@@ -101,7 +102,7 @@
                 android:id="@+id/username_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
+                android:hint="Username*"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,7 +117,7 @@
                 android:id="@+id/password_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
+                android:hint="Password*"
                 android:inputType="textWebPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -132,7 +133,7 @@
                 android:id="@+id/repassword_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Confirm password"
+                android:hint="Confirm password*"
                 android:inputType="textWebPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -157,7 +158,7 @@
                 android:id="@+id/securityhint_edt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Security hint"
+                android:hint="Security hint*"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -185,7 +186,7 @@
                 android:id="@+id/securityanswer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter security answer"
+                android:hint="Enter security answer*"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -198,7 +199,10 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:padding="12dp"
-            android:text="Create account" />
+            android:background="@drawable/background_round_corner_button"
+            android:text="Create account"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="true"/>
 
         <Button
             android:id="@+id/cancel_btn"
@@ -207,6 +211,9 @@
             android:layout_marginBottom="24dp"
             android:layout_marginTop="24dp"
             android:padding="12dp"
+            android:background="@drawable/background_round_corner_button"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
             android:text="Cancel" />
 
 
